@@ -11,9 +11,7 @@
 ## 2. Pipeline
 
 ```
-                                                      [Cart]
-                                                            |
-[Stage 1] → [Stage 2] → [Stage 3] [Stage 4] → [Stage 5] → [Stage 1]
+[Stage 1] → [Stage 2] → [Stage 3] [Cart] → [Stage 4] → [Stage 5] → [Stage 1]
       |
 [Admin Page]
 ```
