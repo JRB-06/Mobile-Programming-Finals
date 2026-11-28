@@ -1,0 +1,3 @@
+# Closed market: Los Pollos Hermanos is the only seller
+
+The app started as a marketplace where Pharmacists ran their own Stores. On 2026-11-28 the team changed it to Los Pollos Hermanos' own e-commerce app. There are only two Roles, Customer and Admin, and the Admin is the owner who runs the catalog, Stock and Orders. This removes Stores, pharmacist applications, the per-Store Order split (ADR 0002), the 2% platform fee, and Earnings/GMV. A checkout creates exactly one Order, and Order Total is Subtotal + Shipping Fee. Moving back to a marketplace would mean reintroducing a `stores` table and store ownership on Products, Orders and RLS policies.

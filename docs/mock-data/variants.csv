@@ -1,4 +1,4 @@
-store_name,product_name,purity,size_label,price,stock
-Gray Matter Pharmacy,Blue Sky Cough Relief,99.1,100ml,450.00,30
-Gray Matter Pharmacy,Blue Sky Cough Relief,70.0,100ml,180.00,12
-Gray Matter Pharmacy,Crystal Clear Vitamin C,92.5,30 tabs,320.00,0
+product_name,purity,size_label,price,stock
+Blue Sky Cough Relief,99.1,100ml,450.00,30
+Blue Sky Cough Relief,70.0,100ml,180.00,12
+Crystal Clear Vitamin C,92.5,30 tabs,320.00,0
