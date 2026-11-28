@@ -84,6 +84,7 @@ Supabase: Auth (email, Google) · PostgREST + RPC · Storage
 ### Local (sqflite, `app.db`, version-numbered `onUpgrade`)
 - `cart_items(variant_id pk, qty, added_at)`
 - `cached_product_cards(key pk, json, cached_at)`
+- `cached_pharmacists(key pk, json, cached_at)`
 - `cached_categories(id pk, json)`
 
 The cart has **no server copy**: it is sent as `items` to `place_order`.

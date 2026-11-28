@@ -18,7 +18,7 @@ Customers search for a pharmacist, browse that pharmacist's products, manage a l
 - Mock card validation and payment decline testing
 - Order tracking, cancellation, and delivered-item reviews
 - Admin-managed pharmacists, inventory and order fulfillment
-- Admin approval, moderation, category, shipping, and statistics tools
+- Admin customer bans, category, shipping, and statistics tools
 - Supabase Row Level Security and database-enforced stock, money, and role rules
 
 ## Tech Stack
