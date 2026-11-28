@@ -1,7 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:los_pollos_hermanos/data/fake/fake_repositories.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_account_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_admin_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_auth_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_cart_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_catalog_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_checkout_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_inventory_repository.dart';
+import 'package:los_pollos_hermanos/data/fake/fake_order_repository.dart';
 import 'package:los_pollos_hermanos/data/providers.dart';
 import 'package:los_pollos_hermanos/data/repositories.dart';
 import 'package:los_pollos_hermanos/data/supabase/supabase_repositories.dart';
