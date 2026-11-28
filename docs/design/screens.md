@@ -136,7 +136,7 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 - **Shows:**
   - Order number and date.
   - **Status timeline** (Paid → Packed → Shipped → Delivered, or the Cancelled state).
-  - Items (with Tier + purity + size, quantity, price paid).
+  - Items (with pharmacist name on each item, Tier + purity + size, quantity, price paid).
   - Price summary.
   - Shipped-to address and paid-with card (••••4242).
 - **Actions:**
@@ -202,7 +202,7 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 - **States:** Standard states. Empty: "No paid orders right now."
 
 ### M-05 Order detail (admin)
-- **Shows:** same content as C-10, plus the **customer's name, email and phone**.
+- **Shows:** same content as C-10 (including the pharmacist name on each item), plus the **customer's name, email and phone**.
 - **Actions:**
   - One primary button that moves the order forward: **Mark as packed**, then **Mark as shipped**, then **Mark as delivered**. It's hidden once Delivered or Cancelled.
   - **Cancel order**, before Delivered, with a confirm dialog: "Cancel and refund ₱680.00? Stock will be restored."

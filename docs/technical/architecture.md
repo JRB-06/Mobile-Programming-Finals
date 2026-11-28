@@ -76,7 +76,7 @@ Supabase: Auth (email, Google) · PostgREST + RPC · Storage
 | `reviews` | id, `order_item_id` unique, product_id, customer_id, rating 1–5, comment, created_at |
 
 - **Tier** is never stored. The `tier_of(purity)` SQL function and `Tier.fromPurity` in Dart use the same thresholds (<80, <99, ≥99), and a unit test pins the Dart side.
-- **View `product_cards`** (`security_invoker`): product + category + `pharmacist_id`, `pharmacist_name`, `pharmacist_photo_url` + min/max price + max purity + total available stock + average rating + review count, over products that aren't archived and whose pharmacist isn't archived. The pharmacist directory and search read this view. The Admin's product list reads `products` directly, so it sees archived ones too.
+- **View `product_cards`** (`security_invoker`): product + category + `pharmacist_id`, `pharmacist_name`, `pharmacist_photo_url` + min/max price + max purity + total available stock + average rating + review count, over products that aren't archived and whose pharmacist isn't archived. The pharmacist-products list and search read this view; the directory reads `pharmacists` directly. The Admin's product list reads `products` directly, so it sees archived ones too.
 - **Low Stock:** non-archived Variants with `stock <= 5`.
 - **Indexes:** the foreign keys (`products.pharmacist_id`, `products.category_id`, `product_variants.product_id`, `orders.customer_id`, `order_items.order_id`, `reviews.product_id`) plus `orders.status`.
 - **IDs:** `uuid` everywhere. `orders.id` is generated in the app.
@@ -107,7 +107,7 @@ The cart has **no server copy**: it is sent as `items` to `place_order`.
 | Network drops while placing an Order | A spinner, then "Couldn't confirm. Retry." | Retrying with the **same** `order_id` returns the existing Order or places it once |
 | Last unit sold to someone else | "Blue Sky Cough Relief · 99.1% · 100ml just sold out" | `place_order` raises `OUT_OF_STOCK:<id>`. The cart marks that line and nothing is charged. |
 | Variant archived while in the cart | The cart line shows "No longer available" | The cart re-reads its Variants when opened, and `place_order` re-checks |
-| Pharmacist archived while browsing | Its Products disappear from the shop; past Orders still show the pharmacist name | Archived pharmacists are filtered from the directory and `product_cards` |
+| Pharmacist archived while browsing | Its Products disappear from the shop, a cart line from it fails checkout, and past Orders still show the pharmacist name | Archived pharmacists are filtered from the directory and `product_cards`, and `place_order` raises `UNAVAILABLE` for them |
 | Image upload fails while the Admin saves a Product | "Saved without some images. Retry upload." | Product row first, then images |
 | Expired session | Nothing visible | `supabase_flutter` refreshes the token. If refresh fails, the router sends the user to /login. |
 | Supabase project paused (free plan, 7 days idle) | Every call fails | Open the dashboard in the week before the demo (NFR-6) |

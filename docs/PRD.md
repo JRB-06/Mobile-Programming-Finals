@@ -188,6 +188,7 @@ Supabase is the **source of truth**. sqflite holds **local-only data and an offl
 |---|---|
 | `cart_items` | The Cart. There's no server copy: it's sent to `place_order` at checkout. |
 | `cached_product_cards` | Last-loaded catalog pages, for offline browsing |
+| `cached_pharmacists` | Last-loaded pharmacist directory pages, for offline browsing |
 | `cached_categories` | Categories for offline filters |
 
 Rules:

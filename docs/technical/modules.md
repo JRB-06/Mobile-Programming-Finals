@@ -51,7 +51,7 @@ Future<ProductDetail> getProduct(String productId);              // pharmacist, 
 Future<Page<Review>> productReviews(String productId, {int page = 0});
 Future<List<Category>> categories();
 ```
-`Pharmacist`: id, name, photoUrl, specialty?, archived. `ProductFilter`: pharmacistId?, categoryId?, tier?, sort (newest / priceAsc / priceDesc / rating). Pages hold 20 items.
+`Pharmacist`: id, name, photoUrl, specialty?, archived. `PharmacistInput(id?, name, photoUrl, specialty?)`: `id` null means create, otherwise update. `ProductFilter`: pharmacistId?, categoryId?, tier?, sort (newest / priceAsc / priceDesc / rating). Pages hold 20 items.
 `ProductCard`: id, name, imageUrl, categoryName, pharmacistId, pharmacistName, minPrice, maxPrice, bestTier, inStock, rating, reviewCount.
 `ProductDetail`: the `ProductCard` fields plus description, pharmacistPhotoUrl and Variants.
 Cached in sqflite: pharmacist directory pages, search pages and categories. Archived Pharmacists, Products and Variants never appear.
@@ -108,7 +108,7 @@ Future<void> setDefaultCard(String id);
 ### InventoryRepository (Admin: catalog management)
 ```dart
 Future<Page<Pharmacist>> pharmacists({String query = '', bool includeArchived = false, int page = 0});
-Future<Pharmacist> savePharmacist(PharmacistInput p);   // create or update: name, photoUrl, specialty
+Future<Pharmacist> savePharmacist(PharmacistInput p);   // create when id == null, update otherwise: name, photoUrl, specialty
 Future<void> setPharmacistArchived(String pharmacistId, bool archived);   // Archive, never delete
 Future<Page<ManagedProduct>> products({String query = '', bool includeArchived = false, int page = 0});
 Future<ManagedProduct> getProduct(String productId);
