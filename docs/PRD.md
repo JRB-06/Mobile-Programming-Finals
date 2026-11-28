@@ -15,11 +15,11 @@ Related docs:
 
 ## 1. Overview & Goals
 
-**One sentence:** an Android app where Customers buy medicines from Los Pollos Hermanos. Each Product comes in purity/size Variants with their own Stock, and the owner (Admin) runs the catalog, Stock and Orders.
+**One sentence:** an Android app where Customers pick a pharmacist and buy that pharmacist's medicines from Los Pollos Hermanos. Each Product comes in purity/size Variants with their own Stock, and the owner (Admin) runs the pharmacists, catalog, Stock and Orders.
 
 | Goal | Success measure |
 |---|---|
-| Customers can shop | Search a Product, pick a Variant, check out, and track the Order to Delivered |
+| Customers can shop | Find a pharmacist, browse their Products, pick a Variant, check out, and track the Order to Delivered |
 | The owner runs the shop | Add a Product with Variants and images, restock, move an Order to Delivered, see Revenue |
 | Secure auth and roles | Email or Google login. A Customer calling the API directly still can't read other Users' data or change Stock or prices. |
 | Correct Stock and money | Two Customers racing for the last unit: exactly one succeeds. Totals always equal subtotal + shipping. |
@@ -37,7 +37,7 @@ Every screen requires login. There is no guest browsing.
 
 | Capability | Customer | Admin (owner) |
 |---|:-:|:-:|
-| Browse and search Products, view Reviews | Yes | Yes |
+| Browse and search Pharmacists and their Products, view Reviews | Yes | Yes |
 | Cart, checkout, own Orders, cancel before Shipped | Yes | No |
 | Review a Product after its Order is Delivered | Yes | No |
 | Manage own profile, Addresses and Cards | Yes | No |
@@ -47,6 +47,9 @@ Every screen requires login. There is no guest browsing.
 | Ban / unban Customers | No | Yes |
 | Set the Shipping Fee | No | Yes |
 | Dashboard (Revenue, Orders, Customers, Low Stock) | No | Yes |
+| Create, edit and archive Pharmacists | No | Yes |
+
+A **Pharmacist** is a catalog record managed by the Admin, not a Role: there is no pharmacist signup or login.
 
 **How a User gets a Role:**
 - **Customer:** every signup, by email or Google.
@@ -85,12 +88,15 @@ Layers 2 and 3 are UX only.
 - **FR-4** Banned Customers can browse but can't place Orders or write Reviews, and they see a notice.
 
 ### Customer
-- **FR-5** Home is the catalog:
+- **FR-5A** Home is a pharmacist directory:
+  - Search Pharmacists by name and specialty.
+  - Selecting one opens its Products (C-01A); archived Pharmacists never appear.
+- **FR-5** After a pharmacist is selected, the catalog lists that pharmacist's Products:
   - Search Products by name.
   - Filter by Category and Tier.
   - Sort by newest, price or rating.
   - Product cards show image, name, price range, best Tier and rating.
-- **FR-6** A Product page shows images, description, rating, Reviews, and Variants (Purity %, Tier badge, Size, price, Stock).
+- **FR-6** A Product page shows the source pharmacist, images, description, rating, Reviews, and Variants (Purity %, Tier badge, Size, price, Stock).
 - **FR-7** Cart:
   - Add a Variant. Out-of-stock Variants can't be added, and quantity can't go above Stock.
   - The Cart always shows current prices and works offline.
@@ -107,8 +113,11 @@ Layers 2 and 3 are UX only.
   - Manage Cards: the number is Luhn-checked, and only brand, last 4 and expiry are saved.
 
 ### Admin (owner)
+- **FR-12A** Pharmacists:
+  - Create and edit Pharmacists: name, photo URL, optional specialty.
+  - Archive Pharmacists; a Product always belongs to exactly one pharmacist.
 - **FR-12** Products:
-  - Create and edit Products: name, description, Category, up to 5 images.
+  - Create and edit Products: name, description, Category, assigned Pharmacist, up to 5 images.
   - Manage Variants (Purity, Size, price, Stock).
   - Archive Products and Variants. Never-ordered items can be deleted.
 - **FR-13** Manage Categories.
@@ -164,8 +173,8 @@ The flow is in `docs/ARCHITECTURE.md` §2. Every screen's content, actions and s
 | Role | Screens |
 |---|---|
 | All | Splash, Login, Sign up, Forgot password, Reset password, Check your email |
-| Customer | Top bar: logo, Cart. Bottom nav: Search, Profile. Home (catalog), Product detail, All reviews, Cart, Checkout, Order placed, My Orders, Order detail, Write review, Profile, Edit profile, Addresses, Cards |
-| Admin | Dashboard, Products, Product editor, Categories, Orders, Order detail, Customers, Settings |
+| Customer | Top bar: logo, Cart. Bottom nav: Search, Profile. Home (pharmacist directory), Pharmacist products, Product detail, All reviews, Cart, Checkout, Order placed, My Orders, Order detail, Write review, Profile, Edit profile, Addresses, Cards |
+| Admin | Dashboard, Products, Product editor, Pharmacists, Pharmacist editor, Categories, Orders, Order detail, Customers, Settings |
 
 Every screen that loads data has loading, empty, error (with retry) and offline states.
 
@@ -210,8 +219,10 @@ Add packages with `flutter pub add <name>` so pub picks compatible versions. For
 | Path | Who |
 |---|---|
 | `/splash`, `/login`, `/signup`, `/forgot-password`, `/reset-password`, `/check-email` | Logged out |
-| `/` (shell: Search · Profile), `/product/:id`, `/product/:id/reviews`, `/cart`, `/checkout`, `/orders`, `/orders/:id`, `/profile/*` | Customer |
-| `/admin`, `/admin/products`, `/admin/products/:id`, `/admin/categories`, `/admin/orders`, `/admin/orders/:id`, `/admin/customers`, `/admin/settings` | Admin |
+| `/` (shell: Search · Profile), `/pharmacist/:id`, `/product/:id`, `/product/:id/reviews`, `/cart`, `/checkout`, `/orders`, `/orders/:id`, `/profile/*` | Customer |
+| `/admin`, `/admin/products`, `/admin/products/:id`, `/admin/pharmacists`, `/admin/pharmacists/:id`, `/admin/categories`, `/admin/orders`, `/admin/orders/:id`, `/admin/customers`, `/admin/settings` | Admin |
+
+Switching pharmacist does not clear the Cart: checkout creates one Order even when its lines come from several pharmacists.
 
 The router listens to one `currentUserProvider` (the Supabase auth stream plus the User's Role and ban flag) and re-runs the redirect on every change.
 
@@ -271,7 +282,7 @@ Target finish: **Fri Dec 4**, leaving a buffer before the first-week-of-December
 
 ## 12. Out of Scope
 
-Third-party sellers / a marketplace, guest browsing, prescriptions, real payments and refunds, real shipping and tracking, tax, push notifications, chat, iOS and web, real drug names, coupons.
+Third-party sellers / a marketplace, pharmacist accounts and logins, guest browsing, prescriptions, real payments and refunds, real shipping and tracking, tax, push notifications, chat, iOS and web, real drug names, coupons.
 
 ## 13. Team Split & Contract
 

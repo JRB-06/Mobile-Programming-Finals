@@ -7,7 +7,7 @@ More detail: `docs/technical/architecture.md` (database functions, tables, failu
 ### Los Pollos Hermanos
 A Pharmaceutical E-commerce app.
 
-This is Los Pollos Hermanos' own online pharmacy, a **closed market**: one seller and no third-party stores. Customers buy medicines. Each Product comes in **Variants** (purity % + size), and each Variant has its own price and stock. The **Admin** is the owner of Los Pollos Hermanos: they run the catalog, stock and orders. It's a Flutter Android app on Supabase (auth, database, image storage), with sqflite on the phone for the cart and offline browsing.
+This is Los Pollos Hermanos' own online pharmacy, a **closed market**: one seller and no third-party stores. Customers first pick a **Pharmacist** (an employee, not an account) from the directory, then browse that pharmacist's medicines. Each Product comes in **Variants** (purity % + size), and each Variant has its own price and stock. The **Admin** is the owner of Los Pollos Hermanos: they run the pharmacists, catalog, stock and orders. It's a Flutter Android app on Supabase (auth, database, image storage), with sqflite on the phone for the cart and offline browsing.
 
 Roles: **Customer** and **Admin**. Every screen requires login. There is no guest browsing.
 
@@ -31,15 +31,16 @@ Roles: **Customer** and **Admin**. Every screen requires login. There is no gues
    - Supabase sends a confirmation email. Forgot-password sends a reset link. The session persists across app restarts.
 
 2. **`HomePage`**
-   A page where the user browses/searches the medicines.
-   Product input → Stage 3
-   - Search by product name, filter by category and purity **Tier**, sort by newest, price or rating.
-   - Each product card shows image, name, price range, best Tier and rating.
+   A page where the user searches/selects the desired pharmacist (C-01).
+   Pharmacist input → Stage 3
+   - Search pharmacists by name and specialty.
+   - Archived pharmacists never appear.
 
-3. **`Products`**
-   Displays the selected product, where the user can add to cart.
+3. **`Pharmacist products`**
+   Displays the products of the selected pharmacist (C-01A); tapping one opens the Product page (C-02), where the user can add to cart.
    add to cart →
-   - The product page lists its variants with a **Tier** badge (Street < 80%, Pharma 80–98.9%, Blue Sky ≥ 99%), size, price and stock, plus its reviews.
+   - The list can be searched and filtered by category and purity **Tier**, and sorted by newest, price or rating.
+   - The product page lists its variants with a **Tier** badge (Street < 80%, Pharma 80–98.9%, Blue Sky ≥ 99%), size, price and stock, plus its reviews and source pharmacist.
    - Out-of-stock variants can't be added, and quantity can't go above stock.
 
 4. **`Add to cart`**
@@ -64,6 +65,7 @@ Edit profile → New profile details
 - Saved **Addresses**, saved **Cards**, Logout.
 
 **`Admin Page`** (the owner)
+- **Pharmacists:** add, edit and archive employees; each Product is assigned to one pharmacist.
 - **Dashboard:** revenue (delivered orders), order count, customer count, low-stock variants.
 - **Products:** add, edit and archive products. Each has up to 5 images, a category, and variants (purity, size, price, stock).
 - **Categories:** add, edit, remove.
@@ -88,7 +90,7 @@ Edit profile → New profile details
 | Piece | What it does |
 |---|---|
 | Auth | Email + password (the built-in email sender only reaches Supabase team members) and Google sign-in |
-| Postgres | All tables, with **row-level security on every table**. Customers see the catalog plus their own orders, addresses and cards. The admin sees and manages everything. Logged-out requests see nothing. |
+| Postgres | All tables, with **row-level security on every table**. Pharmacists are catalog records, not auth users: Customers see non-archived pharmacists and their catalog, plus their own orders, addresses and cards. The admin sees and manages everything. Logged-out requests see nothing. |
 | Database functions | `place_order`, `cancel_order`, `set_order_status`, admin actions: anything touching money, stock, order status or bans |
 | Storage | Product images (public by URL, since they're photos; only the admin can upload) |
 
