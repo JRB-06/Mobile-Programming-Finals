@@ -1,0 +1,3 @@
+user_email,label,line1,line2,city,province,postal_code,country,is_default
+jesse@lospollos.test,Home,9809 Margo St,Brgy. San Isidro,Quezon City,Metro Manila,1100,Philippines,true
+jesse@lospollos.test,Office,45 Ayala Ave,Unit 12B,Makati,Metro Manila,1226,Philippines,false

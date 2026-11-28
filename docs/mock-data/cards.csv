@@ -1,0 +1,3 @@
+user_email,cardholder,brand,last4,exp_month,exp_year,is_default
+jesse@lospollos.test,Jesse P.,visa,4242,12,2029,true
+jesse@lospollos.test,Jesse P.,mastercard,4444,6,2028,false

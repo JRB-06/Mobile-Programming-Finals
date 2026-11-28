@@ -1,0 +1,3 @@
+# Checkout totals and stock are computed in Postgres, not in the app
+
+Checkout runs as one Postgres function (`place_order`) called through Supabase RPC. In a single transaction it locks the Cart's Variants, checks Stock, decrements it, computes the Subtotal, Shipping Fee, 2% Platform Fee and Order Total in `numeric`, and writes the Checkout, Orders and Order Items. We chose this over computing totals in Dart for three reasons: a Customer must not be able to send their own prices, two Customers must not both buy the last unit, and a half-written Checkout must not exist. Cancellation (`cancel_order`) restores Stock the same way. The app only displays the numbers the database returns.

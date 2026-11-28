@@ -1,0 +1,22 @@
+# Secrets
+.env
+.env.local
+
+# Dependencies
+node_modules/
+venv/
+
+# Build & Logs
+dist/
+build/
+*.log
+
+# OS & Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+.impeccable/
+CLAUDE.md
+docs\superpowers
