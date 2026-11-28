@@ -11,7 +11,7 @@ Terms follow `docs/GLOSSARY.md`.
 ## Design rules
 
 - **Few modules, deep ones.** 7 repositories plus 5 pure `core/` modules. Each repository hides Supabase, sqflite, caching, image uploads and RLS behind a handful of methods.
-- **RLS does the scoping, so the interface doesn't.** `OrderRepository.list()` returns "the Orders this User may see": their own for a Customer, all of them for the Admin. There's no separate method per Role.
+- **RLS does the scoping, so the interface doesn't.** `OrderRepository.list()` returns "the Orders this User may see": their own for a Customer, all of them for the Admin. There's no separate method per Role. Pharmacists are catalog records, not Users: Customers read non-archived ones only; only the Admin writes them.
 - **Offline is hidden inside the adapter.** Read methods return cached data when the network fails, and throw `OfflineException` only when there's no cache. The offline banner comes from `connectivityProvider`, not from the repositories.
 - **Money is `int` centavos in Dart** (`Money`), never `double`. Adapters convert Postgres `numeric` at the edge. `₱680.00` is `Money(68000)`.
 - **Stream for state, Future for actions.** Auth and the Cart are streams, because several screens watch them. Everything else is request/response.
@@ -45,14 +45,16 @@ Errors: `InvalidCredentialsException`, `EmailNotConfirmedException`, `EmailInUse
 
 ### CatalogRepository (read-only shop)
 ```dart
+Future<Page<Pharmacist>> pharmacists({String query = '', int page = 0});   // the directory
 Future<Page<ProductCard>> searchProducts({String query = '', ProductFilter filter = const ProductFilter(), int page = 0});
-Future<ProductDetail> getProduct(String productId);              // images, variants, rating
+Future<ProductDetail> getProduct(String productId);              // pharmacist, images, variants, rating
 Future<Page<Review>> productReviews(String productId, {int page = 0});
 Future<List<Category>> categories();
 ```
-`ProductFilter`: categoryId?, tier?, sort (newest / priceAsc / priceDesc / rating). Pages hold 20 items.
-`ProductCard`: id, name, imageUrl, categoryName, minPrice, maxPrice, bestTier, inStock, rating, reviewCount.
-Cached in sqflite: search pages and categories. Archived Products and Variants never appear.
+`Pharmacist`: id, name, photoUrl, specialty?, archived. `ProductFilter`: pharmacistId?, categoryId?, tier?, sort (newest / priceAsc / priceDesc / rating). Pages hold 20 items.
+`ProductCard`: id, name, imageUrl, categoryName, pharmacistId, pharmacistName, minPrice, maxPrice, bestTier, inStock, rating, reviewCount.
+`ProductDetail`: the `ProductCard` fields plus description, pharmacistPhotoUrl and Variants.
+Cached in sqflite: pharmacist directory pages, search pages and categories. Archived Pharmacists, Products and Variants never appear.
 
 ### CartRepository (local only)
 ```dart
@@ -62,7 +64,7 @@ Future<void> setQty(String variantId, int qty);      // qty 0 removes the line
 Future<void> remove(String variantId);
 ```
 `Cart`: lines, `OrderQuote` preview (lines with problems are excluded), itemCount, `canCheckout`.
-`CartLine`: variantId, productId, product name, variant label, Tier, image, unitPrice (current), qty, `availability` (ok / outOfStock / reducedStock(max) / unavailable).
+`CartLine`: variantId, productId, product name, pharmacistName, variant label, Tier, image, unitPrice (current), qty, `availability` (ok / outOfStock / reducedStock(max) / unavailable).
 Errors: `OutOfStockException` on `add`.
 
 ### CheckoutRepository
@@ -71,9 +73,10 @@ Future<Order> placeOrder({
   required String orderId,         // generate once per tap (Uuid().v4()); reuse it on retry
   required String addressId,
   required String cardId,
-});                                // reads the Cart itself; on success removes the ordered lines
+});                                // reads the global Cart itself; on success removes the ordered lines
 Future<Money> shippingFee();       // current fee, for the preview
 ```
+One checkout is one Order even if lines come from several pharmacists; each Order Item snapshots `pharmacistName`.
 Errors:
 - `OutOfStockException(variantId)` and `UnavailableException(variantId)`: nothing is charged, and the Cart is left as it was.
 - `CardDeclinedException`: test number `…0002`.
@@ -83,7 +86,7 @@ Errors:
 ### OrderRepository
 ```dart
 Future<Page<Order>> list({OrderStatus? status, int page = 0});   // Customer: own. Admin: all (RLS).
-Future<OrderDetail> get(String orderId);       // items, address snapshot, card last4, timeline, reviewable items, customer (admin)
+Future<OrderDetail> get(String orderId);       // items (with pharmacistName), address snapshot, card last4, timeline, reviewable items, customer (admin)
 Future<Order> cancel(String orderId);          // Customer before shipped, Admin before delivered; restores stock
 Future<Order> advance(String orderId);         // Admin only: the next status
 Future<void> review(String orderItemId, {required int rating, String? comment});   // Customer; delivered, once per item
@@ -104,10 +107,13 @@ Future<void> setDefaultCard(String id);
 
 ### InventoryRepository (Admin: catalog management)
 ```dart
+Future<Page<Pharmacist>> pharmacists({String query = '', bool includeArchived = false, int page = 0});
+Future<Pharmacist> savePharmacist(PharmacistInput p);   // create or update: name, photoUrl, specialty
+Future<void> setPharmacistArchived(String pharmacistId, bool archived);   // Archive, never delete
 Future<Page<ManagedProduct>> products({String query = '', bool includeArchived = false, int page = 0});
 Future<ManagedProduct> getProduct(String productId);
 Future<ManagedProduct> saveProduct(ProductInput p);
-    // create or update in one call: fields, variants (add/edit/archive), new image files, removed images, image order.
+    // create or update in one call: fields (including required pharmacistId), variants (add/edit/archive), new image files, removed images, image order.
     // Rows are written first, then images; a failed upload throws PartialSaveException(product).
 Future<void> setArchived(String productId, bool archived);
 Future<void> deleteProduct(String productId);   // throws HasOrdersException; archive instead
@@ -123,7 +129,7 @@ Future<void> setBanned(String userId, bool banned);
 Future<void> setShippingFee(Money fee);          // new Orders only
 Future<Dashboard> dashboard();                   // revenue, ordersByStatus, customerCount, lowStockCount
 ```
-Order management for the Admin goes through `OrderRepository`, where RLS gives them every Order.
+Order management for the Admin goes through `OrderRepository`, where RLS gives them every Order. Pharmacist management is catalog management, so it lives in `InventoryRepository`; `AdminRepository` is unchanged.
 
 ## Shared types
 - `Page<T>`: items, page, hasMore.
