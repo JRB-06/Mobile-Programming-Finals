@@ -1,3 +1,3 @@
-store_name,name,description,category,image_urls
-Gray Matter Pharmacy,Blue Sky Cough Relief,"Soothing blue syrup for dry coughs",Cough & Cold,https://picsum.photos/seed/bluesky1/800/800|https://picsum.photos/seed/bluesky2/800/800
-Gray Matter Pharmacy,Crystal Clear Vitamin C,"Chewable tablets, citrus flavor",Vitamins,https://picsum.photos/seed/crystalc/800/800
+name,description,category,image_urls,pharmacist
+Blue Sky Cough Relief,"Soothing blue syrup for dry coughs",Cough & Cold,https://picsum.photos/seed/bluesky1/800/800|https://picsum.photos/seed/bluesky2/800/800,Mike E.
+Crystal Clear Vitamin C,"Chewable tablets, citrus flavor",Vitamins,https://picsum.photos/seed/crystalc/800/800,Tuco S.

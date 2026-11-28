@@ -14,32 +14,31 @@ Read in this order:
 
 Also useful:
 - `docs/ARCHITECTURE.md`: the flow you wrote, now extended.
-- `docs/GLOSSARY.md`: the official names. Use these words in the UI, e.g. **Store**, not "shop".
+- `docs/GLOSSARY.md`: the official names. Use these words in the UI, e.g. **Product** and **Order**, not "item" and "purchase".
 - `docs/mock-data/`: real example data to put in mockups.
 
 ## Suggested Figma setup
 
 - **Frame:** Pixel 8, **412 × 915**. That's the emulator we test on. Design at 1x; Flutter uses the same logical pixels (dp).
-- **Note:** the final APK will also run on a **Samsung Galaxy Tab A7** (10.4" tablet, about **800 × 1280 dp** in portrait). Design for the Pixel first, and add one check frame at 800 × 1280 for a few key screens (Home, Store page, Product page, Cart). Content shouldn't just stretch edge to edge: cap the width of text and forms, and let grids add columns.
+- **Note:** the final APK will also run on a **Samsung Galaxy Tab A7** (10.4" tablet, about **800 × 1280 dp** in portrait). Design for the Pixel first, and add one check frame at 800 × 1280 for a few key screens (Home, Product page, Cart, Admin Products). Content shouldn't just stretch edge to edge: cap the width of text and forms, and let grids add columns.
 - **Pages:**
   - `Cover`
   - `Foundations` (color, type, spacing, icons)
   - `Components`
   - `Auth`
   - `Customer`
-  - `Pharmacist`
   - `Admin`
   - `Prototype`
-- **Frame names:** use the screen ids from screens.md (e.g. `C-04 Store page`). Then the code and the design can point at the same screen.
-- **States:** draw each screen's loading, empty, error and offline states as extra frames next to it (`C-04 Store page / empty`), or reuse the shared state components.
+- **Frame names:** use the screen ids from screens.md (e.g. `C-02 Product page`). Then the code and the design can point at the same screen.
+- **States:** draw each screen's loading, empty, error and offline states as extra frames next to it (`C-01 Home / empty`), or reuse the shared state components.
 - **Platform:** Android only, with Material 3 as the base. Flutter's widgets are Material, so Material-shaped components are cheapest to build. Custom styling on top is fine.
 
 ## What's fixed vs. open
 
 | Fixed (the backend and requirements depend on it) | Open (your call) |
 |---|---|
-| The screens, their content, the actions, and the order of the flows | Colors, typography, shapes, illustration, imagery, motion |
-| The three roles and what each can see | Layout inside each screen |
+| The screens, their content, the actions, and the order of the flows, including the pharmacist directory step | Colors, typography, shapes, illustration, imagery, motion |
+| The two roles (Customer and Admin) and what each can see; pharmacists are records, not a role | Layout inside each screen |
 | The data each screen shows (names, prices, statuses…) | Icon set, logo, splash art |
 | The Tier names and thresholds (Street / Pharma / Blue Sky) | How Tiers and statuses look |
 | Money format `₱1,234.50` | Light or dark theme (dark mode is a stretch goal) |

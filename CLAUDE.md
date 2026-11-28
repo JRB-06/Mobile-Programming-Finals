@@ -1,4 +1,6 @@
-# Los Pollos Hermanos: Flutter final project (multi-store pharmacy)
+# Los Pollos Hermanos: Flutter final project (single-seller online pharmacy)
+
+Pharmacists are Admin-managed catalog records (a `pharmacists` table, `products.pharmacist_id`), not users: no login, no role, no Stores. Customers pick a pharmacist on Home, then browse that pharmacist's Products. The Cart is global and checkout creates one Order.
 
 Two-person team. **Backend** owns `supabase/`, `lib/models/`, `lib/data/`. **Frontend/design** owns `lib/app/`, `lib/features/`. The contract between them is `docs/technical/modules.md` (models plus repository interfaces). Changing a signature is a cross-team change: call it out in the PR.
 

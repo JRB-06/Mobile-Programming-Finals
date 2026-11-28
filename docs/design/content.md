@@ -3,7 +3,7 @@
 Use these exact formats and words. Copy marked *suggested* can be reworded, as long as the meaning stays.
 
 ## Names (from docs/GLOSSARY.md)
-Use **Store** (not shop), **Pharmacist** (not seller), **Product** (screens may say "medicine"), **Variant** (on screen: "option"), **Order**, **Cart**, **Checkout**, **Review**, **Address**, **Card**.
+Use **Pharmacist** (an employee record, never an account), **Product** (screens may say "medicine"), **Variant** (on screen: "option"), **Order**, **Cart**, **Checkout**, **Review**, **Address**, **Card**. Show a Product's pharmacist as "Handled by {Pharmacist}".
 
 ## Formats
 | Thing | Format | Example |
@@ -20,7 +20,7 @@ Use **Store** (not shop), **Pharmacist** (not seller), **Product** (screens may 
 | Order number | # + first 8 characters of the id, uppercase | #3F9A1C2B |
 
 ## Order status labels
-| Status | Customer sees | Pharmacist button to reach it |
+| Status | Customer sees | Admin button to reach it |
 |---|---|---|
 | paid | Paid | (starts here) |
 | packed | Packed | Mark as packed |
@@ -51,15 +51,17 @@ Use **Store** (not shop), **Pharmacist** (not seller), **Product** (screens may 
 ## Empty states (*suggested*)
 | Screen | Title | Action |
 |---|---|---|
-| Home search | No pharmacists match "{query}" | (none) |
-| Store page filters | No products match these filters | Clear filters |
-| Cart | Your cart is empty | Find a pharmacist |
-| My Orders | No orders yet | Find a pharmacist |
+| Pharmacist directory search | No pharmacists match "{query}" | Clear search |
+| Pharmacist products search | No medicines from this pharmacist match "{query}" | Clear filters |
+| Home search | No medicines match "{query}" | Clear filters |
+| Cart | Your cart is empty | Browse medicines |
+| My Orders | No orders yet | Browse medicines |
 | Reviews | No reviews yet | (none) |
 | Addresses / Cards | No saved addresses / cards | Add address / Add card |
-| Pharmacist products | No products yet | Add product |
+| Admin products | No products yet | Add product |
+| Admin pharmacists | No pharmacists yet | Add pharmacist |
 | Incoming orders | No paid orders right now | (none) |
-| Admin applications | No pending applications | (none) |
+| Admin customers search | No customers match "{query}" | (none) |
 
 ## Tone
 Friendly and clear, like a real pharmacy. Show references fit in names, empty states and success screens ("Yeah, science!" on Order placed is fine). Keep them out of errors and anything involving money.

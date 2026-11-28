@@ -1,6 +1,6 @@
 # Los Pollos Hermanos
 
-A multi-store online pharmacy themed after Breaking Bad. **Customers** buy fictional **Products** from **Stores** run by **Pharmacists**.
+The online pharmacy of **Los Pollos Hermanos**, a closed market with one seller. **Customers** pick a **Pharmacist** and buy that Pharmacist's **Products**, and the **Admin** (the owner) runs the catalog, **Stock** and **Orders**.
 
 ## People
 
@@ -9,37 +9,29 @@ Anyone with an account. Each User has exactly one **Role**.
 _Avoid_: Account, member
 
 **Role**:
-What a **User** is allowed to do: **Customer**, **Pharmacist** or **Admin**. Roles are exclusive.
+What a **User** is allowed to do: **Customer** or **Admin**. A **Pharmacist** is not a Role.
 _Avoid_: Permission, user type
 
 **Customer**:
-A **User** who buys **Products**.
+A **User** who buys **Products**. Every signup is a Customer.
 _Avoid_: Buyer, client, shopper
 
-**Pharmacist**:
-A **User** who runs exactly one **Store**. A Pharmacist can't sell until approved, and doesn't buy.
-_Avoid_: Seller, vendor, merchant, store owner
-
 **Admin**:
-A **User** who approves **Pharmacists**, bans **Users**, hides **Products** and oversees all **Orders**.
-_Avoid_: Moderator, superuser
+The owner of Los Pollos Hermanos. The Admin manages **Pharmacists**, **Products**, **Categories**, **Stock**, **Orders**, **Bans** and the **Shipping Fee**. Admins exist only through seed data.
+_Avoid_: Owner (in code), moderator, seller, superuser
 
-**Application**:
-A **Pharmacist**'s request to sell, made at signup. It is pending until an **Admin** approves or rejects it. A rejected applicant becomes a **Customer**.
-_Avoid_: Registration, verification
+**Pharmacist**:
+A Los Pollos Hermanos employee whose **Products** a **Customer** browses. The Admin creates, edits and archives Pharmacists; a Pharmacist has no account or login.
+_Avoid_: Seller, store owner, dealer
 
 **Ban**:
-An **Admin** action that stops a **User** from buying or selling. Banning a **Pharmacist** removes their **Store** from the shop.
+An **Admin** action that stops a **Customer** from placing **Orders** or writing **Reviews**.
 _Avoid_: Suspension, block, deactivation
 
 ## Catalog
 
-**Store**:
-The shop a **Pharmacist** runs: name, logo, description and its **Products**. Its rating is the average of its **Products**' **Reviews**.
-_Avoid_: Shop, pharmacy, vendor
-
 **Product**:
-A fictional medicine sold by one **Store**, sold through one or more **Variants**. Shown on screen as "medicine" if the design calls for it.
+A medicine sold by Los Pollos Hermanos under one **Pharmacist**, sold through one or more **Variants**. Shown on screen as "medicine" if the design calls for it.
 _Avoid_: Medicine (in code), item, listing
 
 **Category**:
@@ -66,34 +58,30 @@ _Avoid_: Volume, quantity, pack
 How many units of a **Variant** are available to buy right now.
 _Avoid_: Inventory, quantity on hand
 
-**Archived**:
-The state of a **Product** or **Variant** its **Pharmacist** removed from sale. It no longer appears in the shop or the **Cart**, but past **Orders** and **Reviews** still show it.
-_Avoid_: Deleted, removed, inactive
+**Low Stock**:
+A **Variant** with 5 or fewer units of **Stock** left.
+_Avoid_: Running out, scarce
 
-**Hidden**:
-The state of a **Product** an **Admin** pulled from the shop. Only an **Admin** can unhide it.
-_Avoid_: Blocked, taken down, archived
+**Archived**:
+The state of a **Product** or **Variant** the **Admin** took off sale. It no longer appears in the shop or the **Cart**, but past **Orders** and **Reviews** still show it.
+_Avoid_: Deleted, hidden, removed, inactive
 
 ## Buying
 
 **Cart**:
-The **Variants** and quantities a **Customer** plans to buy. A Cart can hold **Variants** from several **Stores**, and always shows current prices.
+The **Variants** and quantities a **Customer** plans to buy. It always shows current prices.
 _Avoid_: Basket, bag
 
-**Checkout**:
-One payment by a **Customer** for their whole **Cart**. It creates one **Order** per **Store** in the **Cart**.
-_Avoid_: Purchase, transaction, payment
-
 **Order**:
-The part of a **Checkout** that one **Store** fulfills, with its own **Order Status**. It is cancelled as a whole.
-_Avoid_: Sub-order, shipment, purchase
+One purchase of the whole **Cart**, paid at checkout, with its own **Order Status**. It is cancelled as a whole.
+_Avoid_: Purchase, transaction, checkout
 
 **Order Item**:
-One **Variant** in an **Order**, with the quantity and the price paid at **Checkout**.
+One **Variant** in an **Order**, with the quantity and the price paid.
 _Avoid_: Line item, cart item
 
 **Order Status**:
-Where an **Order** is: **Paid** → **Packed** → **Shipped** → **Delivered**, or **Cancelled**. The **Pharmacist** moves it forward. The **Customer** can cancel before Shipped. An **Admin** can set any Order Status.
+Where an **Order** is: **Paid** → **Packed** → **Shipped** → **Delivered**, or **Cancelled**. The **Admin** moves it forward one step at a time. The **Customer** can cancel before Shipped. The **Admin** can cancel before Delivered.
 _Avoid_: State, stage
 
 **Subtotal**:
@@ -101,15 +89,11 @@ The sum of an **Order**'s **Order Items** (price × quantity).
 _Avoid_: Amount, price
 
 **Shipping Fee**:
-A flat charge per **Order**, set by an **Admin**. A change applies to future **Orders** only.
+A flat charge per **Order**, set by the **Admin**. A change applies to future **Orders** only.
 _Avoid_: Delivery fee, shipping cost
 
-**Platform Fee**:
-2% of an **Order**'s **Subtotal**, paid by the **Customer** and kept by the platform.
-_Avoid_: Service fee, commission
-
 **Order Total**:
-**Subtotal** + **Shipping Fee** + **Platform Fee**.
+**Subtotal** + **Shipping Fee**.
 _Avoid_: Grand total, amount due
 
 **Refund**:
@@ -128,16 +112,8 @@ _Avoid_: Location, shipping info
 A **Customer**'s mock payment card. Only its brand, last four digits and expiry are kept.
 _Avoid_: Payment method, credit card
 
-## Money views
+## Numbers
 
-**Earnings**:
-A **Pharmacist**'s total **Subtotal** across their **Delivered** **Orders**.
-_Avoid_: Revenue, sales, income
-
-**Platform Revenue**:
-The total **Platform Fee** across all **Delivered** **Orders**.
-_Avoid_: Profit, earnings
-
-**GMV**:
-The total **Order Total** across all **Orders** that aren't **Cancelled**.
-_Avoid_: Sales, volume, turnover
+**Revenue**:
+The total **Order Total** across all **Delivered** **Orders**.
+_Avoid_: Sales, earnings, GMV, income

@@ -1,23 +1,23 @@
 # Los Pollos Hermanos
 
-**Los Pollos Hermanos** is a multi-store pharmacy e-commerce application for Android. It is a final project for the Mobile Programming course.
+**Los Pollos Hermanos** is a closed-market pharmacy e-commerce application for Android. Customers pick a pharmacist, then browse that pharmacist's products. It is a final project for the Mobile Programming course.
 
-Customers browse stores and products, manage a local cart, and place orders across one or more stores. Pharmacists manage their store and products, receive incoming orders, and update fulfillment status. Admins approve pharmacist applications and moderate users, products, categories, and orders.
+Customers search for a pharmacist, browse that pharmacist's products, manage a local cart, and place one Order. Pharmacists are Los Pollos Hermanos employees: Admin-managed catalog records with no login. Admins manage pharmacists, products, categories, stock, orders and customers.
 
-> All products, medicines, payments, addresses, cards, stores, and prices are mock data. No real pharmacy or payment information is used.
+> All products, pharmacists, payments, addresses, cards, and prices are mock data. No real pharmacy or payment information is used.
 
 ## Key Features
 
 - Email/password and Google authentication
-- Customer, Pharmacist, and Admin roles
-- Store search and product browsing
+- Customer and Admin roles; pharmacists are records, not accounts
+- Pharmacist directory: select a pharmacist to see their products
 - Purity-based tiers: Street, Pharma, and Blue Sky
 - Product variants with individual prices and stock
 - Offline shopping cart and cached catalog data
-- Checkout split into one order per store
+- One checkout creates one Order, even when the cart spans pharmacists
 - Mock card validation and payment decline testing
 - Order tracking, cancellation, and delivered-item reviews
-- Pharmacist store and inventory management
+- Admin-managed pharmacists, inventory and order fulfillment
 - Admin approval, moderation, category, shipping, and statistics tools
 - Supabase Row Level Security and database-enforced stock, money, and role rules
 
@@ -89,4 +89,4 @@ The repository interfaces and models in [modules.md](docs/technical/modules.md) 
 
 ## Mock Data
 
-Mock datasets for users, addresses, cards, categories, stores, products, variants, orders, and reviews are in [docs/mock-data](docs/mock-data/). The data is intended for development, design previews, and demonstration only.
+Mock datasets for users, pharmacists, addresses, cards, categories, products, variants, orders, and reviews are in [docs/mock-data](docs/mock-data/). The data is intended for development, design previews, and demonstration only.
