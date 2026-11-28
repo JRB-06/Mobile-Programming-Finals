@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[placeholder name] Architecture Diagram</title>
+  <title>Los Pollos Hermanos Architecture Diagram</title>
   <!-- Self-contained rendering: system monospace stack, no web-font fetch.
        The two scripts below are OPTIONAL and power only the PNG/PDF export
        buttons; the diagram renders fully offline without them. -->
@@ -187,12 +187,12 @@
     <div class="header">
       <div class="header-row">
         <div class="pulse-dot"></div>
-        <h1>[placeholder name] Architecture</h1>
+        <h1>Los Pollos Hermanos Architecture</h1>
         <div class="toolbar">
           <div class="toolbar-actions">
-            <button onclick="copyAsImage(this)">📋 Copy</button>
-            <button onclick="downloadPNG(this)">🖼️ PNG</button>
-            <button onclick="downloadPDF(this)">📄 PDF</button>
+            <button onclick="copyAsImage(this)">Copy</button>
+            <button onclick="downloadPNG(this)">PNG</button>
+            <button onclick="downloadPDF(this)">PDF</button>
           </div>
           <button class="toolbar-toggle" onclick="this.parentElement.classList.toggle('expanded')" title="Export options" aria-label="Export options">⋯</button>
         </div>
@@ -237,7 +237,7 @@
 <rect x="740" y="280" width="210" height="70" rx="6" fill="#0f172a"/><rect x="740" y="280" width="210" height="70" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/><text x="845" y="302" fill="white" font-size="11" font-weight="600" text-anchor="middle">Storage</text><text x="845" y="318" fill="#94a3b8" font-size="9" text-anchor="middle">product-images</text><text x="845" y="331" fill="#94a3b8" font-size="9" text-anchor="middle">store-logos</text>
 <rect x="490" y="410" width="460" height="140" rx="6" fill="#0f172a"/><rect x="490" y="410" width="460" height="140" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/><text x="720" y="432" fill="white" font-size="11" font-weight="600" text-anchor="middle">Postgres</text><text x="720" y="448" fill="#94a3b8" font-size="9" text-anchor="middle">tables + RLS on every table</text><text x="720" y="461" fill="#94a3b8" font-size="9" text-anchor="middle">security-definer functions: money, stock, status, roles</text><text x="720" y="474" fill="#94a3b8" font-size="9" text-anchor="middle">trigger handle_new_user · view product_cards</text><text x="720" y="487" fill="#94a3b8" font-size="9" text-anchor="middle">numeric money · uuid ids</text>
 <rect x="490" y="20" width="200" height="60" rx="6" fill="#0f172a"/><rect x="490" y="20" width="200" height="60" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/><text x="590" y="42" fill="white" font-size="11" font-weight="600" text-anchor="middle">Google OAuth</text><text x="590" y="58" fill="#94a3b8" font-size="9" text-anchor="middle">Web client · browser</text>
-<rect x="250" y="20" width="200" height="40" rx="6" fill="#0f172a"/><rect x="250" y="20" width="200" height="40" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/><text x="350" y="44" fill="white" font-size="10" font-weight="600" text-anchor="middle">io.placeholder.app://login-callback</text>
+<rect x="250" y="20" width="200" height="40" rx="6" fill="#0f172a"/><rect x="250" y="20" width="200" height="40" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/><text x="350" y="44" fill="white" font-size="10" font-weight="600" text-anchor="middle">com.lospolloshermanos.app://login-callback</text>
 <text x="20" y="628" fill="white" font-size="10" font-weight="600">Legend</text><rect x="80" y="619" width="16" height="10" rx="2" fill="rgba(8,51,68,0.4)" stroke="#22d3ee"/><text x="102" y="627" fill="#94a3b8" font-size="8">Frontend (partner)</text><rect x="210" y="619" width="16" height="10" rx="2" fill="rgba(6,78,59,0.4)" stroke="#34d399"/><text x="232" y="627" fill="#94a3b8" font-size="8">Backend (you)</text><rect x="340" y="619" width="16" height="10" rx="2" fill="rgba(76,29,149,0.4)" stroke="#a78bfa"/><text x="362" y="627" fill="#94a3b8" font-size="8">Data store</text><rect x="470" y="619" width="16" height="10" rx="2" fill="rgba(120,53,15,0.3)" stroke="#fbbf24"/><text x="492" y="627" fill="#94a3b8" font-size="8">Managed service</text><rect x="600" y="619" width="16" height="10" rx="2" fill="rgba(136,19,55,0.4)" stroke="#fb7185"/><text x="622" y="627" fill="#94a3b8" font-size="8">Auth</text><rect x="730" y="619" width="16" height="10" rx="2" fill="rgba(30,41,59,0.5)" stroke="#94a3b8"/><text x="752" y="627" fill="#94a3b8" font-size="8">External</text><line x1="80" y1="650" x2="96" y2="650" stroke="#fb7185" stroke-dasharray="3,3"/><text x="102" y="653" fill="#94a3b8" font-size="8">auth / async flow</text>
 </svg>
     </div>
@@ -261,7 +261,7 @@
         <li>• Weakest point: Supabase is the single dependency</li></ul></div>
     </div><!-- Footer -->
     <p class="footer">
-      [placeholder name] • docs/design/architecture.md • Nov 2026
+      Los Pollos Hermanos • docs/design/architecture.md • Nov 2026
     </p>
   </div>
 
@@ -275,16 +275,16 @@
         const canvas = await html2canvas(document.body, { backgroundColor: '#020617', scale: 2, useCORS: true, ignoreElements: (e) => e.classList && e.classList.contains('toolbar'), x: r.left + window.scrollX - pad, y: r.top + window.scrollY - pad, width: r.width + pad * 2, height: r.height + pad * 2 });
         const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        btn.textContent = '✓ Copied!';
+        btn.textContent = 'Copied';
       } catch (e) {
-        btn.textContent = '✗ Failed';
+        btn.textContent = 'Failed';
       }
       setTimeout(() => btn.textContent = orig, 2000);
     }
 
     async function downloadPNG(btn) {
       const orig = btn.textContent;
-      btn.textContent = '⏳ ...';
+      btn.textContent = 'Working...';
       try {
         const el = document.getElementById('report-container');
         const r = el.getBoundingClientRect();
@@ -294,16 +294,16 @@
         link.download = 'diagram.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
-        btn.textContent = '✓ Done!';
+        btn.textContent = 'Done';
       } catch (e) {
-        btn.textContent = '✗ Failed';
+        btn.textContent = 'Failed';
       }
       setTimeout(() => btn.textContent = orig, 2000);
     }
 
     async function downloadPDF(btn) {
       const orig = btn.textContent;
-      btn.textContent = '⏳ ...';
+      btn.textContent = 'Working...';
       try {
         const el = document.getElementById('report-container');
         const r = el.getBoundingClientRect();
@@ -315,9 +315,9 @@
         const pdf = new jsPDF({ orientation, unit: 'px', format: [canvas.width, canvas.height], hotfixes: ['px_scaling'] });
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
         pdf.save('diagram.pdf');
-        btn.textContent = '✓ Done!';
+        btn.textContent = 'Done';
       } catch (e) {
-        btn.textContent = '✗ Failed';
+        btn.textContent = 'Failed';
       }
       setTimeout(() => btn.textContent = orig, 2000);
     }

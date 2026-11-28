@@ -1,2 +1,2 @@
-order_ref,reviewer_email,rating,comment
-ORD-001,juan@resell.test,5,"Exactly as described, smooth transaction"
+order_ref,product_name,customer_email,rating,comment
+ORD-001,Blue Sky Cough Relief,jesse@lospollos.test,5,"Yeah, science! Cough gone in a day"

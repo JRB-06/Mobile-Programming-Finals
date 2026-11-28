@@ -1,4 +1,4 @@
-# [placeholder name]
+# Los Pollos Hermanos
 
 A multi-store online pharmacy themed after Breaking Bad. **Customers** buy fictional **Products** from **Stores** run by **Pharmacists**.
 
@@ -11,10 +11,6 @@ _Avoid_: Account, member
 **Role**:
 What a **User** is allowed to do: **Customer**, **Pharmacist** or **Admin**. Roles are exclusive.
 _Avoid_: Permission, user type
-
-**Guest**:
-Someone using the app without logging in. A Guest can browse and search, but can't buy.
-_Avoid_: Visitor, anonymous user
 
 **Customer**:
 A **User** who buys **Products**.

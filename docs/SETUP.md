@@ -102,8 +102,8 @@ Expected: ✓ Flutter, ✓ Android toolchain. **Ignore** "Android Studio (not in
 ```powershell
 flutter emulators --launch pixel8     # or: emulator -avd pixel8
 flutter devices                        # should list "sdk gphone64 x86 64"
-flutter create resell_test
-cd resell_test
+flutter create smoke_test
+cd smoke_test
 flutter run
 ```
 The **first build takes 5–15 min** (it downloads Gradle, ~240 MB, plus the Android dependencies into `%USERPROFILE%\.gradle`). Later builds take ~30–60 s. Keep `flutter run` open and use `r` (hot reload) and `R` (hot restart) instead of re-running.
@@ -119,7 +119,7 @@ In VS Code: open the project, click the device name in the status bar (bottom ri
 { "SUPABASE_URL": "https://xxxx.supabase.co", "SUPABASE_ANON_KEY": "eyJ..." }
 ```
 4. Run with `flutter run --dart-define-from-file=env.json`.
-5. Go to Authentication → URL Configuration and add the redirect `io.resell.app://login-callback` (used for email confirmation and password reset deep links).
+5. Go to Authentication → URL Configuration and add the redirect `com.lospolloshermanos.app://login-callback` (used for email confirmation and password reset deep links).
 
 ## Troubleshooting
 

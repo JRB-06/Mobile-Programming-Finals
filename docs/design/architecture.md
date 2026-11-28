@@ -1,4 +1,4 @@
-# Design: [placeholder name]
+# Design: Los Pollos Hermanos
 
 Requirements: `docs/PRD.md`. Terms: `docs/GLOSSARY.md`. Decisions: `docs/adr/`. Diagram: `architecture.html` (open in a browser).
 
@@ -27,22 +27,22 @@ The app talks to Supabase directly through `supabase_flutter`. RLS guards everyt
 | `store_earnings() → {earnings, delivered_count}` | Pharmacist | |
 
 ### Table access (RLS-guarded CRUD)
-- Read the shop: `product_cards` view, `products`, `product_variants`, `product_images`, `stores`, `categories`, `reviews`.
+- Read the shop (logged-in users only; the `anon` role gets no table access): `stores`, `product_cards` view, `products`, `product_variants`, `product_images`, `categories`, `reviews`.
 - Paging: `.range(from, from+19)`, 20 per page, offset paging (fine at this size).
-- Search: `ilike '%q%'` on name/description, plus filters on category, price, Tier and store.
+- Search: `ilike '%q%'` on `stores.name` (Home and the Search tab search Stores only). Inside a Store: filter `product_cards` by Category and Tier, sorted by newest, price or rating.
 - Customer: own `addresses` and `cards`, own `orders`/`order_items`/`checkouts` (read), insert own `reviews`.
 - Pharmacist: own store's `products`/`product_variants`/`product_images` (insert/update), own store's `orders` (read).
-- Storage: buckets `product-images` (path `{store_id}/...`) and `store-logos`. Public read, and only the owner can write.
+- Storage: buckets `product-images` (path `{store_id}/...`) and `store-logos`. Public read by URL (fictional product photos only; a private bucket would need signed URLs), and only the Store's owner can write.
 
 ### Auth
 - Email/password: `signUp` with `data: {role, full_name, store_name?}`. The `handle_new_user` trigger creates the `profiles` row. **It only accepts `customer` or `pharmacist`**, so a forged `admin` value becomes a customer. For a pharmacist it also creates a pending Store.
-- Google: `signInWithOAuth(OAuthProvider.google, redirectTo: 'io.placeholder.app://login-callback')` opens the browser, then a deep link brings the user back. The same deep link handles email confirmation and password reset. Google users start as Customers and can apply via `apply_as_pharmacist`.
+- Google: `signInWithOAuth(OAuthProvider.google, redirectTo: 'com.lospolloshermanos.app://login-callback')` opens the browser, then a deep link brings the user back. The same deep link handles email confirmation and password reset. Google users start as Customers and can apply via `apply_as_pharmacist`.
 
 ## 4. High-level design
 ```
 Phone ──────────────────────────────────────────┐
 │ features/ (screens)  ── frontend              │
-│   ↕ Riverpod controllers (AsyncValue)         │
+│   | Riverpod controllers (AsyncValue)         │
 │ data/ repositories   ── backend  ◄── the seam │
 │   ├── sqflite: cart, cached products/categories
 │   └── supabase_flutter ─────────────┐         │
@@ -119,5 +119,5 @@ There is one single point of failure (Supabase itself), accepted at this scale. 
 The first thing to break is search and the `product_cards` view (`ilike` and per-read aggregates), at around 10k Products or reviews. The next steps would be a `pg_trgm` index or Postgres full-text search, then trigger-maintained rating/price columns. After that, keyset paging instead of `range`. The signal to act is home or search p95 above 500 ms in the Supabase dashboard.
 
 ## 9. Open questions
-- App id / deep-link scheme (`io.placeholder.app`) waits on the final app name.
+- App id: `com.lospolloshermanos.app`, with the deep link `com.lospolloshermanos.app://login-callback`.
 - Coverage sweep: media covered (Storage, resize before upload). IDs covered (uuid). Search covered (`ilike`, deferred upgrade above). Logs and SLOs are deferred: the Supabase dashboard logs are enough for a class demo.
