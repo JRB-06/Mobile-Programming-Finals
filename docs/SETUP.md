@@ -111,6 +111,29 @@ The **first build takes 5–15 min** (it downloads Gradle, ~240 MB, plus the And
 
 In VS Code: open the project, click the device name in the status bar (bottom right), pick **pixel8**, and press F5.
 
+## 9b. Install the APK on the Samsung Galaxy Tab A7
+
+Develop on the Pixel 8 emulator as usual. To put a build on the tablet:
+
+1. **Enable developer mode** on the tablet: Settings → About tablet → Software information → tap **Build number** 7 times.
+2. Go to Settings → Developer options and turn on **USB debugging**.
+3. Plug in the tablet with USB and accept the "Allow USB debugging?" prompt. `flutter devices` should now list it (e.g. `SM T500`).
+4. Then either:
+   - **Run it directly:** `flutter run -d <device-id> --dart-define-from-file=env.json`
+   - **Or build an APK and install it:**
+     ```powershell
+     flutter build apk --release --dart-define-from-file=env.json
+     adb install -r build\app\outputs\flutter-apk\app-release.apk
+     ```
+     The APK can also be copied to the tablet and opened there; allow "Install unknown apps" for the file manager when asked.
+
+Notes:
+- The Tab A7 runs Android 10–12 (API 29–31) and an arm64 CPU. Min SDK 24 covers it, and the release APK includes arm64 by default.
+- `--dart-define-from-file=env.json` must be passed when building, or the APK has no Supabase URL or key.
+- The release build is signed with the debug key from the Flutter template. That's fine for sideloading. Don't publish it.
+- Check the layout on the tablet's wider screen (about 800 × 1280 dp portrait) before the demo.
+- If the tablet isn't listed, try another USB cable or port, and set the USB mode to "File transfer".
+
 ## 10. Supabase (for later)
 1. Create a free project at https://supabase.com.
 2. Go to Project Settings → API and copy the **Project URL** and **anon public** key.

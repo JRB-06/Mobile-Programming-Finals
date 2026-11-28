@@ -1,6 +1,6 @@
 # Architecture
 
-More detail: `docs/design/architecture.md` (database functions, tables, failure handling) and `docs/design/architecture.html` (diagram). Requirements: `docs/PRD.md`. Terms: `docs/GLOSSARY.md`.
+More detail: `docs/technical/architecture.md` (database functions, tables, failure handling) and `docs/technical/architecture.html` (diagram). Requirements: `docs/PRD.md`. Terms: `docs/GLOSSARY.md`.
 
 ## 1. Overview
 

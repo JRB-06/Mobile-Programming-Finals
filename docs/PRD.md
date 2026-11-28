@@ -3,8 +3,8 @@
 A multi-store online pharmacy themed after Breaking Bad, built with Flutter, Supabase and sqflite. It's a final project for the Mobile Programming course, due the **first week of December 2026**. All products, money, cards and addresses are **fictional mock data**.
 
 Related docs:
-- Screen flow and components: `ARCHITECTURE.md`
-- Technical design (database functions, tables, failures): `docs/design/architecture.md`
+- Screen flow and components: `docs/ARCHITECTURE.md`. Designer handbook: `docs/design/`
+- Technical design (database functions, tables, failures): `docs/technical/architecture.md`
 - Terms: `docs/GLOSSARY.md`
 - Decisions: `docs/adr/`
 - Environment setup: `docs/SETUP.md`
@@ -26,7 +26,7 @@ Related docs:
 
 **Theme:** a chemistry-lab look, purity percentages, the Tier badges (Street / Pharma / Blue Sky), and punny Store names. Product names are fictional; no real drug names.
 
-**Platform:** Android (Pixel 8 emulator, API 35, compile SDK 36).
+**Platform:** Android. Development and testing happen on the Pixel 8 emulator (API 35, compile SDK 36). The release APK is also installed on a **Samsung Galaxy Tab A7** tablet (10.4", Android 12 at most, arm64), so min SDK 24 covers it and layouts must adapt to the tablet width.
 
 ---
 
@@ -163,7 +163,7 @@ Total                             ₱692.60
 
 ## 6. Screens
 
-The flow is in `ARCHITECTURE.md` §2.
+The flow is in `docs/ARCHITECTURE.md` §2. Every screen's content, actions and states are in `docs/design/screens.md`.
 
 **UI design: To be decided.** The visual direction, theme and screen layouts are owned by the frontend partner and will be recorded in `DESIGN.md` once decided.
 
@@ -296,7 +296,7 @@ Guest browsing, prescriptions, real payments and refunds, real shipping and trac
 2. Backend swaps in real Supabase/sqflite calls behind the same signatures.
 3. A signature change is called out in the PR.
 
-The full interfaces (7 repositories plus 4 pure `core/` modules, each with a Fake and a Supabase adapter) are in **`docs/design/modules.md`**. That file is the contract.
+The full interfaces (7 repositories plus 4 pure `core/` modules, each with a Fake and a Supabase adapter) are in **`docs/technical/modules.md`**. That file is the contract.
 
 **Errors:** repositories throw `AppException` subclasses with a user-readable message. Controllers use `AsyncValue.guard`, and screens use `.when(data/loading/error)`.
 
