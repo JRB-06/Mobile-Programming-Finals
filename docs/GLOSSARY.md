@@ -1,6 +1,6 @@
 # Los Pollos Hermanos
 
-The online pharmacy of **Los Pollos Hermanos**, a closed market with one seller. **Customers** buy **Products**, and the **Admin** (the owner) runs the catalog, **Stock** and **Orders**.
+The online pharmacy of **Los Pollos Hermanos**, a closed market with one seller. **Customers** pick a **Pharmacist** and buy that Pharmacist's **Products**, and the **Admin** (the owner) runs the catalog, **Stock** and **Orders**.
 
 ## People
 
@@ -9,7 +9,7 @@ Anyone with an account. Each User has exactly one **Role**.
 _Avoid_: Account, member
 
 **Role**:
-What a **User** is allowed to do: **Customer** or **Admin**.
+What a **User** is allowed to do: **Customer** or **Admin**. A **Pharmacist** is not a Role.
 _Avoid_: Permission, user type
 
 **Customer**:
@@ -17,8 +17,12 @@ A **User** who buys **Products**. Every signup is a Customer.
 _Avoid_: Buyer, client, shopper
 
 **Admin**:
-The owner of Los Pollos Hermanos. The Admin manages **Products**, **Categories**, **Stock**, **Orders**, **Bans** and the **Shipping Fee**. Admins exist only through seed data.
+The owner of Los Pollos Hermanos. The Admin manages **Pharmacists**, **Products**, **Categories**, **Stock**, **Orders**, **Bans** and the **Shipping Fee**. Admins exist only through seed data.
 _Avoid_: Owner (in code), moderator, seller, superuser
+
+**Pharmacist**:
+A Los Pollos Hermanos employee whose **Products** a **Customer** browses. The Admin creates, edits and archives Pharmacists; a Pharmacist has no account or login.
+_Avoid_: Seller, store owner, dealer
 
 **Ban**:
 An **Admin** action that stops a **Customer** from placing **Orders** or writing **Reviews**.
@@ -27,7 +31,7 @@ _Avoid_: Suspension, block, deactivation
 ## Catalog
 
 **Product**:
-A medicine sold by Los Pollos Hermanos, sold through one or more **Variants**. Shown on screen as "medicine" if the design calls for it.
+A medicine sold by Los Pollos Hermanos under one **Pharmacist**, sold through one or more **Variants**. Shown on screen as "medicine" if the design calls for it.
 _Avoid_: Medicine (in code), item, listing
 
 **Category**:
