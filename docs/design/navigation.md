@@ -17,7 +17,7 @@ Splash ─┬─ not logged in ──► A-01 Login ◄─► A-02 Sign up
 **Bottom bar:** **Search** · **Profile**. "Search" is the Home tab.
 
 ```
-C-01 Home (catalog + search) ─► C-02 Product page ─► (add to cart)
+C-01 Home (pharmacist directory + search) ─► C-01A Pharmacist products ─► C-02 Product page ─► (add to cart)
         Top bar Cart ─► C-04 Cart ─► C-05 Checkout ─► C-06 Order placed ─► C-01 Home
                                         │
                                         └─► C-13 Add address / C-15 Add card (inline, if none saved)
@@ -38,7 +38,8 @@ C-07 Profile ─┬─► C-08 Edit profile
 M-01 Dashboard (revenue, orders by status, low stock) ─► M-02/M-03 (tap a low-stock item)
 M-02 Products ─► M-03 Product editor (details, images, variants)
 M-04 Orders ─► M-05 Order detail (advance status / cancel)
-More ─┬─► M-06 Categories ─► M-07 Add/Edit category
+More ─┬─► M-10 Pharmacists ─► M-11 Add/Edit pharmacist
+      ├─► M-06 Categories ─► M-07 Add/Edit category
       ├─► M-08 Customers (search, ban)
       ├─► M-09 Settings (shipping fee)
       └─► Log out

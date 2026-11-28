@@ -45,26 +45,34 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 
 ## Customer (C)
 
-### C-01 Home (catalog)
-- **Purpose:** find a medicine. This is the first screen after login and the "Search" tab.
+### C-01 Home (pharmacist directory)
+- **Purpose:** find a pharmacist. This is the first screen after login and the "Search" tab.
 - **Shows:**
   - Top bar with logo and Cart (badge "3").
-  - **Search field** ("Search medicines").
-  - **Filters:** Category chips (All · Cough & Cold · Pain Relief · Vitamins) and Tier chips (All · Street · Pharma · Blue Sky).
-  - **Sort:** Newest, Price low→high, Price high→low, Top rated.
-  - A grid of **Product cards** (component).
-- **Actions:** search (results update as you type), filter, sort, tap a Product to open C-02.
+  - **Search field** ("Search pharmacists by name or specialty").
+  - A list/grid of **Pharmacist cards** (photo, name, specialty).
+- **Actions:** search (results update as you type), tap a Pharmacist to open C-01A.
 - **States:**
   - Standard states.
-  - Empty search: "No medicines match "blue"" with a **Clear filters** button.
-  - Offline: shows the last loaded results under the offline banner.
-- **Rules:** archived Products never appear. The grid pages in 20 at a time with infinite scroll. It should go to more columns on the tablet.
+  - Empty search: "No pharmacists match "blue"" with a **Clear search** button.
+  - Offline: shows the last loaded directory under the offline banner.
+- **Rules:** archived Pharmacists never appear. The list pages in 20 at a time. It should go to more columns on the tablet.
+
+### C-01A Pharmacist products
+- **Purpose:** browse the products of the selected pharmacist.
+- **Shows:**
+  - Top bar with back, the pharmacist's name and Cart; a header with photo, name and specialty.
+  - **Search field** ("Search medicines"), **Filters:** Category chips and Tier chips, **Sort:** newest, price, rating.
+  - A grid of **Product cards**, each showing the pharmacist where relevant.
+- **Actions:** search, filter, sort, tap a Product to open C-02; tapping the Cart keeps the global cart.
+- **States:** Standard states. Empty: "No medicines from this pharmacist match "blue"" with **Clear filters**. Offline: cached list under the banner.
+- **Rules:** only this pharmacist's non-archived Products appear. Switching pharmacist does not clear the Cart; checkout stays one Order. Pages hold 20 items.
 
 ### C-02 Product page
 - **Purpose:** choose a Variant and add it to the Cart.
 - **Shows:**
   - Image carousel (1–5 images, with dots).
-  - Name "Blue Sky Cough Relief", rating ★ 4.8 (12), Category, description.
+  - Name "Blue Sky Cough Relief", rating ★ 4.8 (12), Category, **Handled by {Pharmacist}**, description.
   - A **Variant selector**: one option per Variant, showing **Tier badge + purity "99.1%"**, size "100ml", price "₱450.00", and stock ("30 in stock", "Only 3 left", or "Out of stock").
   - Quantity stepper (1 up to the stock), **Add to cart** button.
   - **Reviews** section: average, count, and the 3 latest **Review tiles** with "See all reviews".
@@ -81,7 +89,7 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 ### C-04 Cart
 - **Purpose:** review items before paying.
 - **Shows:**
-  - **Cart lines:** image, product name, Tier + purity + size, unit price, quantity stepper, remove.
+  - **Cart lines:** image, product name, pharmacist name, Tier + purity + size, unit price, quantity stepper, remove.
   - **Price summary:** subtotal, shipping ₱50.00, total.
   - **Checkout** button.
 - **Line problems** (each shown on the line):
@@ -175,7 +183,7 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 - **Purpose:** create or edit a Product.
 - **Shows:**
   - **Images:** up to 5, reorderable, with add and remove.
-  - **Details:** name, description, Category (dropdown).
+  - **Details:** name, description, Category (dropdown), **Pharmacist (dropdown, required)**.
   - **Variants list:** each row has purity % (with a live Tier badge preview), size label, price ₱, stock, and archive/remove. Plus an **Add variant** button.
   - **Save** button.
   - **Archive product** and **Delete product** (destructive), shown when editing.
@@ -208,3 +216,15 @@ The layout is yours. Ids (A-, C-, M-) match navigation.md; use them as Figma fra
 
 ### M-09 Settings
 - **Shows:** **Shipping fee per order** ₱50.00 (editable), with the note "Applies to new orders only". Also a **Log out** button.
+
+### M-10 Pharmacists
+- **Purpose:** manage the pharmacists whose products Customers browse.
+- **Shows:** search, a "Show archived" toggle, and a list of **Pharmacist rows** (photo, name, specialty, product count, status tag). An **Add pharmacist** button (FAB).
+- **Actions:** tap a row to open M-11; add a pharmacist.
+- **States:** Standard states. Empty: "No pharmacists yet" with an **Add pharmacist** button.
+
+### M-11 Pharmacist editor
+- **Purpose:** create or edit a pharmacist (an employee record, not an account).
+- **Shows:** photo URL field with preview, name, optional specialty, **Save**. When editing: **Archive pharmacist** and the product count.
+- **Rules:** name and photo URL are required; a Product always has one pharmacist. Archived pharmacists disappear from C-01 but past Orders keep the name. There is no delete and no password/login field.
+- **States:** saving, validation errors, unsaved-changes confirmation on back.

@@ -29,6 +29,8 @@ Build these once on the `Components` page and reuse them. Each lists the variant
 ## Cards and rows
 | Component | Content | States |
 |---|---|---|
+| **Pharmacist card** | Photo, name, specialty | In directory |
+| **Pharmacist row** | Photo, name, specialty, product count, status tag | Active, archived |
 | **Product card** | Image, name, Category, price range "₱180.00 – ₱450.00" (or one price), best Tier badge, rating, "Out of stock" overlay | In stock, out of stock |
 | **Variant option** | Tier badge, purity, size, price, stock label | Selected, unselected, disabled (out of stock) |
 | **Cart line** | Image, product name, Tier + purity + size, unit price, quantity stepper, remove | Normal, out of stock, reduced stock, unavailable |
@@ -52,7 +54,7 @@ Build these once on the `Components` page and reuse them. Each lists the variant
 | Purity field | Suffix %, 1 decimal, shows the Tier badge as you type |
 | Card number field | Auto spacing `4242 4242 4242 4242`, brand logo appears |
 | Quantity stepper | − / value / +. The + is disabled at stock; the − at 1 (in the cart, − at 1 asks to remove). |
-| Dropdown / picker | Category select, status select (admin) |
+| Dropdown / picker | Pharmacist select (required on M-03), Category select, status select (admin) |
 | Image picker grid | Up to 5 tiles, add tile, remove ×, drag to reorder |
 | Buttons | Primary, secondary, text, destructive. Each has a loading state (spinner inside, label kept). |
 

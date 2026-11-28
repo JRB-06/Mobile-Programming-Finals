@@ -4,7 +4,8 @@
 
 **Los Pollos Hermanos** is the online pharmacy of Los Pollos Hermanos, themed after *Breaking Bad*:
 - It's a **closed market**: Los Pollos Hermanos is the only seller.
-- Customers browse the catalog and buy medicines.
+- Customers pick a **Pharmacist** (an employee, not an account) from Home, then browse that pharmacist's medicines.
+- Pharmacists are catalog records the Admin creates, edits and archives; they have no login.
 - Every Product comes in **Variants** that differ by **purity %** and **size**, each with its own price and stock.
 - The **Admin** is the owner. They manage products, stock and orders from inside the same app.
 
@@ -14,8 +15,8 @@ It's a school final project, due the first week of December 2026, and it'll be d
 
 | Role | Goal in one line | Where they spend time |
 |---|---|---|
-| **Customer** | Find a medicine, pick the right Variant, pay, track the Order | Home (catalog), Product page, Cart, Checkout, My Orders |
-| **Admin (owner)** | Keep the shelves stocked and ship Orders | Dashboard, Products, Product editor, Orders |
+| **Customer** | Pick a pharmacist, find a medicine, choose the right Variant, pay, track the Order | Home (pharmacist directory), Pharmacist products, Product page, Cart, Checkout, My Orders |
+| **Admin (owner)** | Manage pharmacists, keep the shelves stocked and ship Orders | Dashboard, Pharmacists, Products, Product editor, Orders |
 
 The two roles never mix: the Admin doesn't shop. Each role gets its own navigation (see navigation.md).
 

@@ -3,7 +3,7 @@
 Use these exact formats and words. Copy marked *suggested* can be reworded, as long as the meaning stays.
 
 ## Names (from docs/GLOSSARY.md)
-Use **Product** (screens may say "medicine"), **Variant** (on screen: "option"), **Order**, **Cart**, **Checkout**, **Review**, **Address**, **Card**.
+Use **Pharmacist** (an employee record, never an account), **Product** (screens may say "medicine"), **Variant** (on screen: "option"), **Order**, **Cart**, **Checkout**, **Review**, **Address**, **Card**. Show a Product's pharmacist as "Handled by {Pharmacist}".
 
 ## Formats
 | Thing | Format | Example |
@@ -51,12 +51,15 @@ Use **Product** (screens may say "medicine"), **Variant** (on screen: "option"),
 ## Empty states (*suggested*)
 | Screen | Title | Action |
 |---|---|---|
+| Pharmacist directory search | No pharmacists match "{query}" | Clear search |
+| Pharmacist products search | No medicines from this pharmacist match "{query}" | Clear filters |
 | Home search | No medicines match "{query}" | Clear filters |
 | Cart | Your cart is empty | Browse medicines |
 | My Orders | No orders yet | Browse medicines |
 | Reviews | No reviews yet | (none) |
 | Addresses / Cards | No saved addresses / cards | Add address / Add card |
 | Admin products | No products yet | Add product |
+| Admin pharmacists | No pharmacists yet | Add pharmacist |
 | Incoming orders | No paid orders right now | (none) |
 | Admin customers search | No customers match "{query}" | (none) |
 

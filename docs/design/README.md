@@ -37,7 +37,7 @@ Also useful:
 
 | Fixed (the backend and requirements depend on it) | Open (your call) |
 |---|---|
-| The screens, their content, the actions, and the order of the flows | Colors, typography, shapes, illustration, imagery, motion |
+| The screens, their content, the actions, and the order of the flows, including the pharmacist directory step | Colors, typography, shapes, illustration, imagery, motion |
 | The three roles and what each can see | Layout inside each screen |
 | The data each screen shows (names, prices, statuses…) | Icon set, logo, splash art |
 | The Tier names and thresholds (Street / Pharma / Blue Sky) | How Tiers and statuses look |
